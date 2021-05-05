@@ -19,4 +19,14 @@ class Profile(models.Model):
     #     today = date.today()
     #     delta = relativedelta(today, self.dob)
     #     return str(delta.years)
-    
+
+class Workout(models.Model):
+    exercise = models.CharField(max_length=25)
+    sets = models.IntegerField()
+    reps = models.IntegerField()
+
+workouts = [
+    Workout('squats', 4, 12),
+    Workout('leg curls', 4, 20),
+    Workout('calf raises', 5, 50),
+]

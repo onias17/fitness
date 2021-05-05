@@ -1,8 +1,8 @@
 from django.shortcuts import render
+from .models import Profile, Workout
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile
 
 # Create your views here.
 from django.http import HttpResponse
@@ -22,6 +22,12 @@ def profiles_index(request):
 def new_profile(request):
     if request.method == 'POST':
         profile_form = ProfileCreationForm(request.POST, request.FILES)
+
+
+# WORKOUTS
+def workouts_index(request):
+    workouts = Workout.objects.all()
+    return render(request, 'workouts/index.html', {'workouts': workouts})
 
 # AUTHORIZATION
 def signup(request):
