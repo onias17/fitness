@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from .models import Profile
 
 # Create your views here.
 from django.http import HttpResponse
@@ -12,7 +13,17 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
-#AUTHORIZATION
+# PROFILES
+def profiles_index(request):
+    profile = Profile.objects.get(user = request.user)
+
+    return render(request, 'profiles/index.html')
+
+def new_profile(request):
+    if request.method == 'POST':
+        profile_form = ProfileCreationForm(request.POST, request.FILES)
+
+# AUTHORIZATION
 def signup(request):
     error_message = ''
 
