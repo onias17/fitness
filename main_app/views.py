@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse('1 Timothy 4:8')
+    return render(request, 'home.html')
 
 def about(request):
     return render(request, 'about.html')
