@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Workout Details</h1>
+
+<div class="card">
+  <div class="card-content">
+    <p>Exercise:{{ workout.exercise }}</p>
+    <p>Sets: {{ workout.sets }}</p>
+    <p>Reps: {{ workout.reps }}</p>
+  </div>
+</div>
+
+{% endblock %}

@@ -4,13 +4,17 @@
 <h1>Workout List</h1>
 
 {% for workout in workouts %}
-  <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ workout.exercise }}</span>
-      <p>Sets: {{ workout.sets }}</p>
-      <p>Reps: {{ workout.reps }}</p>
+    <div class="card">
+        <a href="/workouts/{{ workout.id }}">
+            <div class="card-content">
+            <p>Exercise: {{ workout.exercise }}</p>
+            <p>Sets: {{ workout.sets }}</p>
+            <p>Reps: {{ workout.reps }}</p>
+            <p>Created: {{ workout.created }}</p>
+            <p>Updated: {{ workout.updated }}</p>
+            </div>
+        </a>
     </div>
-  </div>
 {% endfor %}
 
 {% endblock %}

@@ -24,9 +24,8 @@ class Workout(models.Model):
     exercise = models.CharField(max_length=25)
     sets = models.IntegerField()
     reps = models.IntegerField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
-workouts = [
-    Workout('squats', 4, 12),
-    Workout('leg curls', 4, 20),
-    Workout('calf raises', 5, 50),
-]
+    class Meta:
+        ordering = ['created']
