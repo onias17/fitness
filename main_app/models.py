@@ -2,6 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 # from dateutil.relativedelta import relativedelta
 
+EXERCISE_CHOICES = [
+    ('Upeer Body', (
+            ('bench press', 'Bench Press'),
+            ('pull downs', 'Pull Downs'),
+        )
+    ),
+    ('Lower Bodey', (
+            ('squats', 'Squats'),
+            ('leg curls', 'Leg Curls'),
+        )
+    ),
+    ('Abs', (
+            ('crunches', 'Crunches'),
+            ('planks', 'Planks'),
+        )
+    ),
+]
+
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -21,11 +39,15 @@ class Profile(models.Model):
     #     return str(delta.years)
 
 class Workout(models.Model):
-    exercise = models.CharField(max_length=25)
-    sets = models.IntegerField()
-    reps = models.IntegerField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    date = models.DateField()
 
-    class Meta:
-        ordering = ['created']
+class Exercise(models.Model):
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
+    exercise = models.CharField(
+        max_length=25,
+        choices=EXERCISE_CHOICES
+    )
+    sets = models.IntegerField()
+    reps = models.IntegerField() 
+
