@@ -42,8 +42,8 @@ class Workout(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     date = models.DateField()
 
-    def __str__(self):
-        return f'{self.get_workout_display()} on {self.date}'
+    # def __str__(self):
+    #     return f'{self.get_workout_display()} on {self.date}'
 
 class Exercise(models.Model):
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
