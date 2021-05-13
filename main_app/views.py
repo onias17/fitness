@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Profile, Workout, Exercise
+from .forms import ProfileCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -16,13 +17,45 @@ def about(request):
 # PROFILES
 def profiles_index(request):
     profile = Profile.objects.get(user = request.user)
+    context = {'profile', profile}
 
-    return render(request, 'profiles/index.html')
+    return render(request, 'profiles/index.html', context)
 
 def new_profile(request):
     if request.method == 'POST':
         profile_form = ProfileCreationForm(request.POST, request.FILES)
+        if profile_form.is_valid():
+            new_profile = profile_form.save(commit=False)
+            new_profile.user = request.user
+            new_profile.save()
 
+            return redirect('detail', new_profile)
+
+    else:
+        profile_form = ProfileCreationForm()
+        context = {'profile_form' : profile_form}
+        return render(request, 'profiles/new.html', context)
+
+def profile_detail(request, profile_id):
+    profile = Profile.objects.get(id=profile_id)
+    context = {'profile' : profile}
+    
+    return render(request, 'profiles/detail.html', context)
+
+@login_required
+def edit_profile(request, profile_id):
+    profile = Profile.objects.get(id=profile_id)
+
+    if request.method == 'POST':
+        profile_form = ProfileCreationForm(request.POST, request.FILES, instance=profile)
+        if profile_form.is_valid():
+            updated_profile = profile.form.save()
+            return redirect('detail', updated_profile.id)
+    
+    else:
+        profile_form = ProfileCreationForm(instance=profile)
+        context = {'profiel_form' : profile_form }
+        return render(request, 'profiles/edit.html', context)
 
 # WORKOUTS
 def workouts_index(request):
